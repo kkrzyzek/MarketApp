@@ -24,12 +24,13 @@ UI is designed to be user-friendly.
 * Internet connection
 
 ### Screenshots
+<p float="left">
 <img src="https://github.com/kkrzyzek/MarketApp/blob/master/appScreenshots/splashScreen.png?raw=true" width="300"/>
 <img src="https://github.com/kkrzyzek/MarketApp/blob/master/appScreenshots/mainView.png?raw=true" width="300"/>
 <img src="https://raw.githubusercontent.com/kkrzyzek/MarketApp/master/appScreenshots/dialog.png" width="300"/>
 <img src="https://github.com/kkrzyzek/MarketApp/blob/master/appScreenshots/floatingActionMenu.png?raw=true" width="300"/>
 <img src="https://github.com/kkrzyzek/MarketApp/blob/master/appScreenshots/sthWentWrong.png?raw=true" width="300"/>
-
+</p>
 ## Libraries
 
 * [Retrofit 2.4.0](http://square.github.io/retrofit/) - Networking
@@ -43,4 +44,4 @@ UI is designed to be user-friendly.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/kkrzyzek/MarketApp/blob/master/README.md) file for details.
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/kkrzyzek/MarketApp/blob/master/LICENSE) file for details.
