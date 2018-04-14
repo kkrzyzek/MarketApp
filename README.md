@@ -40,9 +40,10 @@ UI is designed to be user-friendly.
 
 ## Author
 
-* **Krzysztof Krzyzek** - *Initial work* - [LinkedIn](https://www.linkedin.com/in/kkrzyzek/)
+* **Krzysztof Krzyzek** - [LinkedIn](https://www.linkedin.com/in/kkrzyzek/)
 
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](https://github.com/kkrzyzek/MarketApp/blob/master/LICENSE) file for details.
+All graphics used in the  MarketApp application are labeled for reuse.
