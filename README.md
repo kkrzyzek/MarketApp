@@ -31,6 +31,7 @@ UI is designed to be user-friendly.
 <img src="https://github.com/kkrzyzek/MarketApp/blob/master/appScreenshots/floatingActionMenu.png?raw=true" width="300"/>
 <img src="https://github.com/kkrzyzek/MarketApp/blob/master/appScreenshots/sthWentWrong.png?raw=true" width="300"/>
 </p>
+
 ## Libraries
 
 * [Retrofit 2.4.0](http://square.github.io/retrofit/) - Networking
