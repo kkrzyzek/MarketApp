@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">MarketApp</string>
+    <string name="sth_went_wrong">Something went wrong.\nSwipe down to retry.</string>
+    <string name="refresh">Refresh</string>
+    <string name="info">About app</string>
+
+    <string name="uk">UK</string>
+    <string name="germany">Germany</string>
+    <string name="france">France</string>
+
+    <string name="uk_markets">UK Markets</string>
+    <string name="germany_markets">German Markets</string>
+    <string name="france_markets">French Markets</string>
+
+</resources>

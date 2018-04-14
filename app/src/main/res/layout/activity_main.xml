@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".activity.MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include
+            layout="@layout/custom_actionbar"
+            android:id="@+id/actionbar" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/five_dp"
+            android:background="@drawable/toolbar_shadow"/>
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swiperefresh_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ListView
+                android:id="@+id/instruments_list_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminateTint="@color/colorPrimaryDark"
+        android:scaleX="0.6"
+        android:scaleY="0.6"
+        android:layout_centerInParent="true"/>
+
+    <LinearLayout
+        android:id="@+id/sth_went_wrong_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerInParent="true">
+
+        <ImageView
+            android:src="@drawable/wrong_man"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/oneninetysix_dp"
+            android:paddingBottom="@dimen/eight_dp"
+            android:layout_marginTop="@dimen/twenty_dp"
+            android:layout_gravity="center"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sthwrong_text"
+            android:textAlignment="center"
+            android:text="@string/sth_went_wrong" />
+
+    </LinearLayout>
+
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_margin="@dimen/sixteen_dp"
+        app:menu_showShadow="true"
+        app:menu_openDirection="up"
+        app:menu_backgroundColor="@android:color/transparent" >
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/en_fab"
+            android:src="@drawable/uk"
+            style="@style/SingleFAB"
+            app:fab_size="mini"
+            app:fab_label="@string/uk" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/ge_fab"
+            android:src="@drawable/germany"
+            style="@style/SingleFAB"
+            app:fab_size="mini"
+            app:fab_label="@string/germany" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fr_fab"
+            android:src="@drawable/france"
+            style="@style/SingleFAB"
+            app:fab_size="mini"
+            app:fab_label="@string/france" />
+
+        </com.github.clans.fab.FloatingActionMenu>
+
+</RelativeLayout>

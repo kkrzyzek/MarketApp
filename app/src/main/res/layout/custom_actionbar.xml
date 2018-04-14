@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/fifty_dp"
+    android:background="@color/colorPrimary">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/fifty_dp" >
+
+        <TextView
+            android:id="@+id/actionbar_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/actionbar_image"
+            android:layout_centerVertical="true"
+            android:paddingLeft="@dimen/eight_dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/toolbar_text"
+            android:textStyle="bold"
+            tools:text="UK Markets"/>
+
+        <ImageView
+            android:id="@+id/actionbar_image"
+            android:layout_width="@dimen/thirtyfive_dp"
+            android:layout_height="@dimen/thirtyfive_dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/eight_dp"
+            tools:src="@drawable/uk" />
+
+    </RelativeLayout>
+
+</android.support.v7.widget.Toolbar>

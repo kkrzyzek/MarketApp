@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.kkrzyzek.marketapp.activity.MainActivity">
+
+    <item
+        android:id="@+id/info_menu_item"
+        android:title="@string/info"
+        android:icon="@drawable/ic_info"
+        android:orderInCategory="1"
+        app:showAsAction="ifRoom"/>
+
+</menu>
