@@ -43,4 +43,4 @@ UI is designed to be user-friendly.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/kkrzyzek/MarketApp/blob/master/README.md) file for details.
