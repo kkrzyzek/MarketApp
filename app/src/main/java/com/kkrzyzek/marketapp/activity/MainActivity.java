@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 mToolbarText.setText(R.string.uk_markets);
                 mToolbarImage.setImageResource(R.drawable.uk);
 
-                checkIfAdapterEmpty(mInstrumentAdapter);
+                clearAdapterIfNotEmpty(mInstrumentAdapter);
                 mCurrentCall = mApiInterface.getENInstrumentData();
 
                 mProgressBar.setVisibility(View.VISIBLE);
@@ -160,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 mToolbarText.setText(R.string.germany_markets);
                 mToolbarImage.setImageResource(R.drawable.germany);
 
-                checkIfAdapterEmpty(mInstrumentAdapter);
+                clearAdapterIfNotEmpty(mInstrumentAdapter);
                 mCurrentCall = mApiInterface.getDEInstrumentData();
 
                 mProgressBar.setVisibility(View.VISIBLE);
@@ -179,7 +179,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 mToolbarImage.setImageResource(R.drawable.france);
 
                 //Check if adapter empty and if not -> clear current data
-                checkIfAdapterEmpty(mInstrumentAdapter);
+                clearAdapterIfNotEmpty(mInstrumentAdapter);
                 mCurrentCall = mApiInterface.getFRInstrumentData();
 
                 mProgressBar.setVisibility(View.VISIBLE);
@@ -195,7 +195,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                checkIfAdapterEmpty(mInstrumentAdapter);
+                clearAdapterIfNotEmpty(mInstrumentAdapter);
 
                 mProgressBar.setVisibility(View.VISIBLE);
                 getLoaderManager().restartLoader(INSTRUMENT_LOADER_ID, null, MainActivity.this);
@@ -229,9 +229,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     //Helper method for building InfoDialog
     private void showInfoDialog () {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("About MarketApp");
-        builder.setMessage("Android application presenting the list of markets available for different countries - UK, Germany, France.\nSwipe down to refresh the list.");
-        builder.setPositiveButton("Back", new DialogInterface.OnClickListener() {
+        builder.setTitle(R.string.about_app);
+        builder.setMessage(R.string.about_app_message);
+        builder.setPositiveButton(R.string.back, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int i) {
                 // dismiss the dialog
@@ -245,8 +245,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         alertDialog.show();
     }
 
-    //Helper method for checking if adapter is empty
-    private void checkIfAdapterEmpty (InstrumentAdapter adapter) {
+    //Helper method for clearing adapter
+    private void clearAdapterIfNotEmpty (InstrumentAdapter adapter) {
         if (adapter != null && adapter.getCount() != 0) {
             adapter.clear();
         }
