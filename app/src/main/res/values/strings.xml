@@ -13,8 +13,7 @@
     <string name="france_markets">French Markets</string>
 
     <string name="about_app">About MarketApp</string>
-    <string name="about_app_message">Android application presenting the list of markets available for different countries - UK, Germany, France.
-    Swipe down to refresh the list.</string>
+    <string name="about_app_message">Android application presenting the list of markets available for different countries - UK, Germany, France.\nSwipe down to refresh the list.</string>
     <string name="back">Back</string>
 
 </resources>

@@ -63,6 +63,15 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
 
+    //Keys and values for storing info about toolbar state and Call in onSaveInstanceState()
+    private static final String KEY_TOOLBAR_TEXT = "toolbar_text";
+    private String mToolbarTextString;
+    private static final String KEY_TOOLBAR_IMAGE_ID = "toolbar_image";
+    private int mToolbarImageId;
+    private static final String KEY_CURRENTCALL_FLAG = "current_call_flag";
+    private int  mCurrentCallFlag;
+
+
     //Adapter for list of objects to display on screen
     private InstrumentAdapter mInstrumentAdapter;
 
@@ -96,11 +105,28 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         //Toolbar config
         Toolbar toolbar = findViewById(R.id.actionbar);
         setSupportActionBar(toolbar);
-        
+
         mToolbarText = findViewById(R.id.actionbar_text);
-        mToolbarText.setText(R.string.uk_markets);
         mToolbarImage = findViewById(R.id.actionbar_image);
-        mToolbarImage.setImageResource(R.drawable.uk);
+
+        //Handling screen rotation
+        //Getting saved data from savedInstanceState
+        if (savedInstanceState != null) {
+            //Get toolbar text and image id; get mCurrentCallFlag - flag for Retrofit Call object
+            mToolbarTextString = savedInstanceState.getString(KEY_TOOLBAR_TEXT);
+            mToolbarImageId = savedInstanceState.getInt(KEY_TOOLBAR_IMAGE_ID);
+            mCurrentCallFlag = savedInstanceState.getInt(KEY_CURRENTCALL_FLAG);
+        } else {
+            //If no saved data => get default values
+            mToolbarTextString = getResources().getString(R.string.uk_markets);
+            mToolbarImageId = this
+                    .getResources()
+                    .getIdentifier("uk", "drawable", this.getPackageName());
+            mCurrentCallFlag = 0;
+        }
+        //Set proper text and image in toolbar
+        mToolbarText.setText(mToolbarTextString);
+        mToolbarImage.setImageResource(mToolbarImageId);
 
         //Get a reference to progressBar view
         mProgressBar = findViewById(R.id.progress_bar);
@@ -112,8 +138,20 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         //Get instance of Retrofit interface
         mApiInterface = ApiClient.getApiClient().create(ApiInterface.class);
-        //Call GET method in interface to get data
-        mCurrentCall = mApiInterface.getENInstrumentData();
+        //Call proper GET method in interface to get data (based on mCurrentCall flag)
+        switch(mCurrentCallFlag) {
+            case 0:
+                mCurrentCall = mApiInterface.getENInstrumentData();
+                break;
+            case 1:
+                mCurrentCall = mApiInterface.getDEInstrumentData();
+                break;
+            case 2:
+                mCurrentCall = mApiInterface.getFRInstrumentData();
+                break;
+            default:
+                mCurrentCall = mApiInterface.getENInstrumentData();
+        }
 
         //Set adapter and populate ListView with data
         ListView instrumentListView = findViewById(R.id.instruments_list_view);
@@ -138,16 +176,27 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         englandButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Hide Floating Action Menu, config toolbar text and image
+                //Hide Floating Action Menu
                 mFloatingActionMenu.close(true);
-                mToolbarText.setText(R.string.uk_markets);
-                mToolbarImage.setImageResource(R.drawable.uk);
 
+                //Get toolbar image String
+                mToolbarTextString = getResources().getString(R.string.uk_markets);
+                //Set toolbar text
+                mToolbarText.setText(mToolbarTextString);
+                //Get toolbar image ID
+                mToolbarImageId = getApplicationContext().getResources().getIdentifier("uk", "drawable", getApplicationContext().getPackageName());
+                //Set toolbar image
+                mToolbarImage.setImageResource(mToolbarImageId);
+
+                //Check if adapter empty and if not -> clear current data
                 clearAdapterIfNotEmpty(mInstrumentAdapter);
                 mCurrentCall = mApiInterface.getENInstrumentData();
+                //Set flag for Call object
+                mCurrentCallFlag = 0;
 
                 mProgressBar.setVisibility(View.VISIBLE);
 
+                //Restart the loader and get new data
                 getLoaderManager().restartLoader(INSTRUMENT_LOADER_ID, null, MainActivity.this);
             }
         });
@@ -157,16 +206,21 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             @Override
             public void onClick(View view) {
                 mFloatingActionMenu.close(true);
-                mToolbarText.setText(R.string.germany_markets);
-                mToolbarImage.setImageResource(R.drawable.germany);
+
+                mToolbarTextString = getResources().getString(R.string.germany_markets);
+                mToolbarText.setText(mToolbarTextString);
+                mToolbarImageId = MainActivity.this
+                        .getResources()
+                        .getIdentifier("germany", "drawable", MainActivity.this.getPackageName());
+                mToolbarImage.setImageResource(mToolbarImageId);
 
                 clearAdapterIfNotEmpty(mInstrumentAdapter);
                 mCurrentCall = mApiInterface.getDEInstrumentData();
+                mCurrentCallFlag = 1;
 
                 mProgressBar.setVisibility(View.VISIBLE);
 
                 getLoaderManager().restartLoader(INSTRUMENT_LOADER_ID, null, MainActivity.this);
-
             }
         });
 
@@ -175,18 +229,21 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             @Override
             public void onClick(View view) {
                 mFloatingActionMenu.close(true);
-                mToolbarText.setText(R.string.france_markets);
-                mToolbarImage.setImageResource(R.drawable.france);
 
-                //Check if adapter empty and if not -> clear current data
+                mToolbarTextString = getResources().getString(R.string.france_markets);
+                mToolbarText.setText(mToolbarTextString);
+                mToolbarImageId = MainActivity.this
+                        .getResources()
+                        .getIdentifier("france", "drawable", MainActivity.this.getPackageName());
+                mToolbarImage.setImageResource(mToolbarImageId);
+
                 clearAdapterIfNotEmpty(mInstrumentAdapter);
                 mCurrentCall = mApiInterface.getFRInstrumentData();
+                mCurrentCallFlag = 2;
 
                 mProgressBar.setVisibility(View.VISIBLE);
 
-                //Restart the loader and get new data
                 getLoaderManager().restartLoader(INSTRUMENT_LOADER_ID, null, MainActivity.this);
-
             }
         });
 
@@ -204,6 +261,20 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             }
         });
 
+    }
+
+    //Handling screen rotation - saving key-value pairs
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        //Save toolbar text id
+        outState.putString(KEY_TOOLBAR_TEXT, mToolbarTextString);
+        //Save toolbar image id
+        outState.putInt(KEY_TOOLBAR_IMAGE_ID, mToolbarImageId);
+        //Save flag for proper Call object
+        outState.putInt(KEY_CURRENTCALL_FLAG, mCurrentCallFlag);
+
+        Log.i(LOG_TAG, "onSaveInstanceState executed successfully.");
     }
 
     //Instantiate proper layout xml into menu in toolbar
