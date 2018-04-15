@@ -53,13 +53,13 @@ import com.kkrzyzek.marketapp.network.ApiClient;
 import com.kkrzyzek.marketapp.network.ApiInterface;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.List;
 
 import retrofit2.Call;
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Instrument>> {
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<JSONResponse> {
 
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
 
@@ -325,16 +325,20 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     //Create Loader if not running
     @Override
-    public Loader<List<Instrument>> onCreateLoader(int i, Bundle bundle) {
-        return new InstrumentLoader(MainActivity.this, mCurrentCall);
+    public Loader<JSONResponse> onCreateLoader(int i, Bundle bundle) {
+        Log.i(LOG_TAG, "onCreateLoader() method executed.");
+        return new InstrumentLoader(this, mCurrentCall);
     }
+
 
     //Update UI by updating data in Adapter
     @Override
-    public void onLoadFinished(Loader<List<Instrument>> loader, List<Instrument> instruments) {
+    public void onLoadFinished(Loader<JSONResponse> loader, JSONResponse jsonResponse) {
         mInstrumentAdapter.clear();
 
-        if (instruments != null && !instruments.isEmpty()) {
+        if (jsonResponse != null) {
+            //Get instruments from jsonResponse and store in ArrayList
+            ArrayList<Instrument> instruments = new ArrayList<>(Arrays.asList(jsonResponse.getInstruments()));
             //Sort instruments by displayName
             Collections.sort(instruments, new Comparator<Instrument>() {
                 @Override
@@ -343,6 +347,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 }
             });
             mSthWentWrong.setVisibility(View.GONE);
+            //Update data in Adapter
             mInstrumentAdapter.addAll(instruments);
         } else {
             mSthWentWrong.setVisibility(View.VISIBLE);
@@ -350,12 +355,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         mProgressBar.setVisibility(View.GONE);
 
-        Log.i(LOG_TAG, "onLoadFinished() method executed.");
+        Log.e(LOG_TAG, "onLoadFinished() method executed.");
     }
 
     //Clear data from Loader ,when it is no longer valid
     @Override
-    public void onLoaderReset(Loader<List<Instrument>> loader) {
+    public void onLoaderReset(Loader<JSONResponse> loader) {
         mInstrumentAdapter.clear();
         Log.i(LOG_TAG, "onLoaderReset() method executed");
     }
